@@ -50,6 +50,10 @@ const Counters = (props) => {
     counters.find((c) => c.id === id).value++;
     setCounters([...counters]);
   }
+  //remove all counters
+  function handleDeleteAll() {
+    setCounters([]);
+  }
 
   //find the counter on counters array and decrement it only if value is greater than 0
   function handleDecrement(id) {
@@ -119,6 +123,8 @@ const Counters = (props) => {
       <button onClick={incrementAll}>incrementAll</button>
       <button onClick={decrementAll}>decrementAll</button>
       <button onClick={resetCounters}>Reset</button>
+      {/* create a button that deletes all counters */}
+      <button onClick={handleDeleteAll}>Delete All</button>
     </div>
   );
 };
