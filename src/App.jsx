@@ -1,16 +1,14 @@
-import './App.css'
-import Count from './components/Count'
-import ScrollTop from './components/scroll'
+import react from "react";
+import "./App.css";
+import Counters from "./components/Counters";
+
 
 function App() {
-
   return (
     <div className="App">
-      
-          <Count init={5} buttonText='button '/>
-       <ScrollTop/>
+      <Counters className="counters" nCounters={3} initValue={4} />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
