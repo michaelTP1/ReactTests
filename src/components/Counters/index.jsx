@@ -22,7 +22,14 @@ const Counters = (props) => {
   //create custom hook for counters that calls checkCombination() when the counters change
   useEffect(() => {
     checkCombination();
+    
   }, [counters]);
+
+  useEffect(() => {
+    updateColor();
+    console.log("counters changed");
+    }, [counters.length]);
+  
 
   function checkCombination() {
     //find the combination sequence in the counters array and delete all if is found
@@ -48,15 +55,14 @@ const Counters = (props) => {
   }
 
   function updateColor() {
-    //update the classname of the counters
-    console.log("updateColor");
-    var newCounters = counters.map((counter) => {
-      console.log(`old color: ${counter.color}`);
-      counter.color=getCounterColor(counter.id);
-      console.log(`new color: ${counter.color}`);
+    //update the color of the counters
+      counters.map((counter) => {
+      counter.color=getCounterColor(counters.indexOf(counter));
+      
     }
     );
-    setCounters([...counters]);
+    console.log(counters);
+      setCounters([...counters]);
   }
 
   function handleIncrement(id) {
