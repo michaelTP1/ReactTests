@@ -26,12 +26,15 @@ const Counters = (props) => {
 
   function checkCombination() {
     //find the combination sequence in the counters array and delete all if is found
-    var combinationArray =combination.split("-"); //array of the combination
-    var combinationIndex = 0;                     //index of the combination
-    var countersIndex = 0;                        //index of the counters array
+    var combinationArray = combination.split("-"); //array of the combination
+    var combinationIndex = 0; //index of the combination
+    var countersIndex = 0; //index of the counters array
     console.log("dsfdfsfsf");
     //loop through the counters array and check if the combination is found
-    while (combinationIndex < combinationArray.length && countersIndex < counters.length) {
+    while (
+      combinationIndex < combinationArray.length &&
+      countersIndex < counters.length
+    ) {
       if (combinationArray[combinationIndex] == counters[countersIndex].value) {
         combinationIndex++;
         countersIndex++;
@@ -42,7 +45,18 @@ const Counters = (props) => {
     if (combinationIndex == combinationArray.length) {
       setCounters([]);
     }
+  }
 
+  function updateColor() {
+    //update the classname of the counters
+    console.log("updateColor");
+    var newCounters = counters.map((counter) => {
+      console.log(`old color: ${counter.color}`);
+      counter.color=getCounterColor(counter.id);
+      console.log(`new color: ${counter.color}`);
+    }
+    );
+    setCounters([...counters]);
   }
 
   function handleIncrement(id) {
@@ -58,8 +72,7 @@ const Counters = (props) => {
   //find the counter on counters array and decrement it only if value is greater than 0
   function handleDecrement(id) {
     var counter = counters.find((c) => c.id === id);
-    if (counter.value > 0) 
-      counter.value--;
+    if (counter.value > 0) counter.value--;
 
     setCounters([...counters]);
   }
@@ -81,6 +94,8 @@ const Counters = (props) => {
       counters.findIndex((c) => c.id === id),
       1
     );
+    updateColor();
+
     setCounters([...counters]);
   }
   //function that get the first available unique id from counters
@@ -101,31 +116,43 @@ const Counters = (props) => {
     setCounters([...counters]);
   }
 
+  //function that alternates 2 colors for the counters
+  function getCounterColor(id) {
+    return id % 2 === 0 ? "counter-even" : "counter-odd";
+  }
+
   return (
-    <div className="counters">
-      {counters.map((counter) => (
-        <Counter
-          id={counter.id}
-          onIncrement={handleIncrement}
-          onDecrement={handleDecrement}
-          onDelete={handleDelete}
-          key={counter.id}
-          counter={counter}
-        />
-      ))}
-      <input id="nCounters" type="number" />
-      <button
-        onClick={() => addCounters(document.getElementById("nCounters").value)}
-      >
-        Add Counters
-      </button>
-      <br />
-      <button onClick={incrementAll}>incrementAll</button>
-      <button onClick={decrementAll}>decrementAll</button>
-      <button onClick={resetCounters}>Reset</button>
-      {/* create a button that deletes all counters */}
-      <button onClick={handleDeleteAll}>Delete All</button>
-    </div>
+    <>
+      <div className="counters">
+        {counters.map((counter) => (
+          <Counter
+            id={counter.id}
+            onIncrement={handleIncrement}
+            onDecrement={handleDecrement}
+            onDelete={handleDelete}
+            color={getCounterColor(counter.id)}
+            key={counter.id}
+            counter={counter}
+          />
+        ))}
+      </div>
+      <div className="controls">
+        <input id="nCounters" type="number" />
+        <button
+          onClick={() =>
+            addCounters(document.getElementById("nCounters").value)
+          }
+        >
+          Add Counters
+        </button>
+        <br />
+        <button onClick={incrementAll}>incrementAll</button>
+        <button onClick={decrementAll}>decrementAll</button>
+        <button onClick={resetCounters}>Reset</button>
+        {/* create a button that deletes all counters */}
+        <button onClick={handleDeleteAll}>Delete All</button>
+      </div>
+    </>
   );
 };
 export default Counters;

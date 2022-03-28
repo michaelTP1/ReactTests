@@ -5,3 +5,12 @@
 button {
   font-size: calc(10px + 2vmin);
 }
+.counters {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 80vh;
+  overflow-y: scroll;
+}
