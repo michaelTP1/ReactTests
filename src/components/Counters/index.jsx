@@ -1,7 +1,7 @@
 import React from "react";
 import "./main.css";
 import Counter from "./Counter";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const combination = "5-6-2-1";
 
@@ -19,24 +19,25 @@ function initCounters({ nCounters, initValue }) {
 
 const Counters = (props) => {
   const [counters, setCounters] = useState(initCounters(props));
+  //create custom hook for counters that calls checkCombination() when the counters change
+  useEffect(() => {
+    checkCombination();
+  }, [counters]);
 
   function checkCombination() {
     //find the combination sequence in the counters array and delete all if is found
-    var currentCombination = "";
-    var combinationArray =combination.split("-");
-    var combinationIndex = 0;
-    var countersIndex = 0;
-    console.log(combinationArray)
+    var combinationArray =combination.split("-"); //array of the combination
+    var combinationIndex = 0;                     //index of the combination
+    var countersIndex = 0;                        //index of the counters array
+    console.log("dsfdfsfsf");
+    //loop through the counters array and check if the combination is found
     while (combinationIndex < combinationArray.length && countersIndex < counters.length) {
       if (combinationArray[combinationIndex] == counters[countersIndex].value) {
-        currentCombination += counters[countersIndex].id;
         combinationIndex++;
         countersIndex++;
       } else {
-        currentCombination="";
         countersIndex++;
       }
-      console.log(currentCombination);
     }
     if (combinationIndex == combinationArray.length) {
       setCounters([]);
@@ -48,7 +49,6 @@ const Counters = (props) => {
     //find the counter on counters array and increment it
     counters.find((c) => c.id === id).value++;
     setCounters([...counters]);
-    checkCombination();
   }
 
   //find the counter on counters array and decrement it only if value is greater than 0
@@ -58,12 +58,10 @@ const Counters = (props) => {
       counter.value--;
 
     setCounters([...counters]);
-    checkCombination();
   }
   function incrementAll() {
     counters.map((c) => c.value++);
     setCounters([...counters]);
-    checkCombination();
   }
   //decrement all counters only if value is greater than 0
   function decrementAll() {
@@ -73,7 +71,6 @@ const Counters = (props) => {
   function resetCounters() {
     counters.map((c) => (c.value = 0));
     setCounters([...counters]);
-    checkCombination();
   }
   function handleDelete(id) {
     counters.splice(
@@ -81,7 +78,6 @@ const Counters = (props) => {
       1
     );
     setCounters([...counters]);
-    checkCombination();
   }
   //function that get the first available unique id from counters
   function getUniqueId() {
@@ -99,7 +95,6 @@ const Counters = (props) => {
       counters.push({ id: getUniqueId(), value: 0 });
     }
     setCounters([...counters]);
-    checkCombination();
   }
 
   return (
