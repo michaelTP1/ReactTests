@@ -10,7 +10,7 @@ function initCounters({ nCounters, initValue }) {
   if (nCounters < 0) throw new Error("not valid values");
   if (nCounters > 0) {
     counters = [];
-    for (let i = 0; i < nCounters; i++) {
+    for (let i = 1; i < nCounters; i++) {
       counters.push({ id: i, value: initValue });
     }
   }
@@ -25,10 +25,7 @@ const Counters = (props) => {
     
   }, [counters]);
 
-  useEffect(() => {
-    updateColor();
-    console.log("counters changed");
-    }, [counters.length]);
+
   
 
   function checkCombination() {
@@ -36,7 +33,6 @@ const Counters = (props) => {
     var combinationArray = combination.split("-"); //array of the combination
     var combinationIndex = 0; //index of the combination
     var countersIndex = 0; //index of the counters array
-    console.log("dsfdfsfsf");
     //loop through the counters array and check if the combination is found
     while (
       combinationIndex < combinationArray.length &&
@@ -54,16 +50,6 @@ const Counters = (props) => {
     }
   }
 
-  function updateColor() {
-    //update the color of the counters
-      counters.map((counter) => {
-      counter.color=getCounterColor(counters.indexOf(counter));
-      
-    }
-    );
-    console.log(counters);
-      setCounters([...counters]);
-  }
 
   function handleIncrement(id) {
     //find the counter on counters array and increment it
@@ -100,7 +86,7 @@ const Counters = (props) => {
       counters.findIndex((c) => c.id === id),
       1
     );
-    updateColor();
+   
 
     setCounters([...counters]);
   }
@@ -123,8 +109,10 @@ const Counters = (props) => {
   }
 
   //function that alternates 2 colors for the counters
-  function getCounterColor(id) {
-    return id % 2 === 0 ? "counter-even" : "counter-odd";
+  function getCounterColor(index) {
+    var color = index % 2 === 0 ? "counter-even" : "counter-odd";
+  
+    return color;
   }
 
   return (
@@ -136,7 +124,7 @@ const Counters = (props) => {
             onIncrement={handleIncrement}
             onDecrement={handleDecrement}
             onDelete={handleDelete}
-            color={getCounterColor(counter.id)}
+            color={getCounterColor(counters.indexOf(counter))}
             key={counter.id}
             counter={counter}
           />

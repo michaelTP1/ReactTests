@@ -8,7 +8,7 @@ const Counter=(props)=>{
   const {id, counter, onIncrement, onDecrement, onDelete, color}=props;
 
 return(
-  <div className={`${color} contenedor`}>
+  <div id={id} className= 'contenedor' color={color}>
     <h1>{counter.value}</h1>
     <CountButton onClick={()=>onIncrement(id)} buttonText='up'/>
     <CountButton onClick={()=>onDecrement(id)} buttonText='down'/>

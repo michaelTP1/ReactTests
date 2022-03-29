@@ -1,13 +1,16 @@
 *{
     margin: 0%;
 }
-/*light blue for even, very dark blue for odd*/
-.counter-even{
-    background-color: #e6f2ff;
+/*find div with attribute color= counter-even*/
+[color="counter-even"]{
+    background-color: #649ef5;
 }
-.counter-odd{
-    background-color: #b3d4ff;
+[color="counter-odd"]{
+    background-color: #b7b0f5;
 }
+
+
+
 .contenedor{
     display: flex;
     align-items: center;
